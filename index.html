@@ -1,21 +1,37 @@
 <!DOCTYPE html><html lang="en" class="dark"><head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexusStream - Educational Video &amp; Course Streaming</title>
-    <meta name="description" content="Ultra-premium educational video and course streaming platform with high-performance lecture navigation, assetId resolver, and dark glassmorphic design.">
-    <meta property="og:title" content="NexusStream - Educational Video &amp; Course Streaming">
-    <meta property="og:description" content="Ultra-premium educational video and course streaming platform with high-performance lecture navigation, assetId resolver, and dark glassmorphic design.">
-    <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
+    <title>HRRY Study Portal - Target Board Free Study Portal</title>
+    <meta name="description" content="Free board exam batches, video lectures and chapter notes.">
+    
+    <!-- OpenGraph -->
+    <meta property="og:title" content="HRRY Study Portal - Target Board Free Study Portal">
+    <meta property="og:image" content="https://i.ibb.co/6RdmyKC0/logo.png">
+    <meta property="og:description" content="Free unlocked online batches, video lectures, and study notes.">
+
+    <!-- Google Fonts: Outfit + Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Syne:wght@600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
-    <script type="module" src="js/index-Cp7iIhR2.js"></script>
-    <link rel="stylesheet" crossorigin="" href="css/index-BSjyJWIu.css">
-  </head>
-  <body class="bg-[#0B0F19] text-slate-100 antialiased selection:bg-emerald-500/20 selection:text-emerald-300 min-h-screen overflow-x-hidden">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Outfit:wght@500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    <link rel="icon" type="image/jpeg" href="https://i.ibb.co/6RdmyKC0/logo.png">
+    <link rel="apple-touch-icon" href="https://i.ibb.co/6RdmyKC0/logo.png">
+
+    <script type="module" src="js/index-pfhqgXXN.js"></script>
+    <link rel="stylesheet" crossorigin="" href="css/index-DBbway7t.css">
+  <script>
+(function(){
+  function sync(){
+    document.body.classList.toggle('hrry-player-mode', /^\/player\//.test(location.pathname));
+  }
+  sync();
+  ['pushState','replaceState'].forEach(function(k){
+    var fn=history[k];
+    history[k]=function(){var r=fn.apply(this,arguments);sync();return r};
+  });
+  addEventListener('popstate',sync);
+})();
+</script>
+</head>
+  <body class="bg-[#0E0F13] text-gray-100 antialiased font-sans selection:bg-blue-500 selection:text-white">
     <div id="root"></div>
-  
-
-
 </body></html>
