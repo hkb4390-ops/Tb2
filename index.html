@@ -1,193 +1,30 @@
-<!DOCTYPE html>
-<html lang="hi" data-theme="dark">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Target Board">
-<meta name="theme-color" content="#0E0F13">
-<title>HRRY Study Portal - Target Board</title>
-<meta name="description" content="Free board exam batches, video lectures and chapter notes.">
-<link rel="icon" href="https://i.ibb.co/6RdmyKC0/logo.png">
-<link rel="apple-touch-icon" href="https://i.ibb.co/6RdmyKC0/logo.png">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#0E0F13;--card:#1a1c23;--line:rgba(255,255,255,.08);--tx:#f3f4f6;--mut:#9ca3af;--ac:#f4bc4a;--on:#1a1300;--glass:rgba(24,26,33,.72);--dk:#000;--ease:cubic-bezier(.32,.72,0,1)}
-[data-theme=light]{--bg:#fff9a6;--card:#fffde0;--line:rgba(0,0,0,.08);--tx:#14110a;--mut:#6b6540;--ac:#fde047;--on:#14110a;--glass:rgba(255,255,230,.75);--dk:#14110a}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0}
-html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;overscroll-behavior:none;transition:background .4s}
-h1,h2,h3,.h{font-family:Outfit,sans-serif}
-button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;transition:transform .25s var(--ease),opacity .2s}
-button:active,.card:active,.row:active{transform:scale(.95);opacity:.85}
-/* splash = app opening */
-#splash{position:fixed;inset:0;z-index:99;background:#fff7d6;color:#0b1a3a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:opacity .6s var(--ease),transform .6s var(--ease)}
-#splash.out{opacity:0;transform:scale(1.25);pointer-events:none}
-#splash img{width:170px;height:170px;border-radius:50%;border:5px solid #2bb5a0;object-fit:cover;animation:pop .9s var(--ease) both}
-#splash h1{font-size:30px;font-weight:800;letter-spacing:1px;animation:up .8s .2s var(--ease) both}
-#splash p{animation:up .8s .35s var(--ease) both}
-#splash .ic{display:flex;gap:14px;margin-top:22px;font-size:22px;animation:up .8s .5s var(--ease) both}
-#splash .ic span{width:48px;height:48px;border-radius:50%;border:2px solid #7c3aed;display:grid;place-items:center}
-@keyframes pop{from{transform:scale(.4);opacity:0}}
-@keyframes up{from{transform:translateY(24px);opacity:0}}
-/* app shell */
-#app{position:fixed;inset:0;max-width:520px;margin:auto;display:flex;flex-direction:column;opacity:0;transform:scale(.94);transition:.7s var(--ease)}
-#app.on{opacity:1;transform:none}
-header{padding:calc(env(safe-area-inset-top) + 10px) 14px 10px;display:flex;align-items:center;gap:12px;position:relative;z-index:5}
-.glass{background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(22px);backdrop-filter:saturate(180%) blur(22px);border:1px solid var(--line)}
-.pill{display:flex;align-items:center;gap:8px;padding:5px 12px 5px 6px;border-radius:30px;text-align:left}
-.pill img,.av{width:34px;height:34px;border-radius:50%;object-fit:cover;background:var(--ac)}
-.pill b{display:block;font-size:13px}.pill small{font-size:11px;color:var(--mut)}
-.menu{font-size:24px;padding:4px 8px}
-main{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:4px 14px calc(110px + env(safe-area-inset-bottom))}
-main>section{animation:slide .5s var(--ease)}
-@keyframes slide{from{opacity:0;transform:translateX(26px)}}
-h2.t{font-size:20px;margin:22px 0 12px;display:flex;justify-content:space-between;align-items:center}
-.sm{font-size:12px;color:var(--ac);font-family:'Plus Jakarta Sans'}
-/* banners */
-.ban{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;border-radius:18px}
-.ban::-webkit-scrollbar{display:none}
-.ban img{flex:0 0 100%;scroll-snap-align:center;border-radius:18px;aspect-ratio:16/8;object-fit:cover}
-.dots{display:flex;justify-content:center;gap:6px;margin-top:10px}
-.dots i{width:6px;height:6px;border-radius:9px;background:var(--mut);opacity:.5;transition:.4s var(--ease)}.dots i.a{width:20px;background:var(--ac);opacity:1}
-.q{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
-.q button{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px 4px;font-size:12px;font-weight:700;display:grid;gap:8px;justify-items:center}
-.q span{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:20px;color:#fff}
-/* cards */
-.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:10px;margin-bottom:16px;transition:transform .25s var(--ease)}
-.card img{width:100%;border-radius:14px;aspect-ratio:16/9;object-fit:cover;background:#222}
-.card h3{font-size:15px;margin:10px 4px 6px}
-.fr{display:flex;align-items:center;gap:8px;margin:0 4px 12px;font-weight:800}
-.fr em{font-style:normal;font-size:11px;background:#16a34a33;color:#22c55e;padding:3px 9px;border-radius:20px}
-.btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.b{padding:12px;border-radius:12px;font-weight:800;font-size:14px;background:var(--ac);color:var(--on);width:100%}
-.b.d{background:#23262e;color:#fff}[data-theme=light] .b.d{background:#14110a}
-.b.ok{background:#16a34a;color:#fff}
-.empty{background:var(--card);border:1px dashed var(--line);border-radius:18px;padding:40px 16px;text-align:center;color:var(--mut);font-size:14px}
-.box{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:28px 18px;text-align:center;margin-top:40px}
-.box .lg{width:64px;height:64px;border-radius:18px;background:#3a3320;display:grid;place-items:center;font-size:30px;margin:0 auto 12px}
-select{width:100%;padding:14px;border-radius:12px;background:var(--bg);color:var(--tx);border:1px solid var(--line);margin:14px 0;font:inherit}
-.dev img{width:110px;height:110px;border-radius:50%;object-fit:cover;border:3px solid var(--ac)}
-.dev{text-align:center}.dev p{color:var(--mut);font-size:13px;margin:8px 0}
-.chip{display:inline-block;padding:5px 12px;border-radius:20px;background:var(--ac);color:var(--on);font-size:12px;font-weight:800}
-.sk{background:var(--card);border-radius:14px;margin:8px 0;padding:14px;font-size:14px}
-/* iOS floating tab bar */
-nav{position:fixed;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom));max-width:496px;margin:auto;border-radius:28px;display:grid;grid-template-columns:repeat(5,1fr);padding:8px 4px;z-index:10;box-shadow:0 10px 40px #0006}
-nav button{display:grid;justify-items:center;gap:2px;font-size:10px;font-weight:700;color:var(--mut);position:relative}
-nav button i{font-style:normal;font-size:18px;width:40px;height:40px;display:grid;place-items:center;border-radius:50%;transition:.45s var(--ease)}
-nav button.a{color:var(--tx)}
-nav button.a i{background:var(--dk);color:var(--ac);transform:translateY(-14px) scale(1.15);box-shadow:0 8px 20px #0006}
-nav button.a span{transform:translateY(-12px)}
-nav sup{position:absolute;top:0;right:14px;background:#ef4444;color:#fff;border-radius:9px;font-size:9px;padding:1px 5px}
-/* drawer + sheet */
-.ov{position:fixed;inset:0;background:#0007;opacity:0;pointer-events:none;transition:.4s;z-index:20}
-.ov.on{opacity:1;pointer-events:auto}
-#drawer{position:fixed;top:0;bottom:0;left:0;width:80%;max-width:320px;z-index:21;padding:calc(env(safe-area-inset-top) + 16px) 14px 20px;overflow-y:auto;transform:translateX(-105%);transition:transform .5s var(--ease);background:var(--bg);border-radius:0 26px 26px 0}
-#drawer.on{transform:none}
-#drawer .top{display:flex;align-items:center;gap:10px;margin-bottom:16px}
-#drawer small.g{display:block;color:var(--mut);font-size:11px;font-weight:800;letter-spacing:1px;margin:16px 0 8px}
-.row{display:flex;align-items:center;gap:12px;padding:13px;background:var(--card);border:1px solid var(--line);margin-bottom:-1px;width:100%;text-align:left;font-weight:700;font-size:14px;transition:transform .25s var(--ease)}
-.row:first-of-type{border-radius:16px 16px 0 0}.row:last-of-type{border-radius:0 0 16px 16px}
-.row span:last-child{margin-left:auto;color:var(--mut)}
-.sw{width:46px;height:28px;border-radius:20px;background:var(--ac);position:relative;margin-left:auto}
-.sw:after{content:"";position:absolute;top:3px;right:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.4s var(--ease)}
-[data-theme=light] .sw:after{right:21px}
-#sheet{position:fixed;left:0;right:0;bottom:0;max-width:520px;margin:auto;max-height:82%;overflow-y:auto;z-index:31;background:var(--bg);border-radius:28px 28px 0 0;padding:12px 16px calc(24px + env(safe-area-inset-bottom));transform:translateY(105%);transition:transform .55s var(--ease)}
-#sheet.on{transform:none}
-#sheet:before{content:"";display:block;width:40px;height:5px;border-radius:9px;background:var(--mut);opacity:.5;margin:0 auto 14px}
-#ov2{z-index:30}
-.toast{position:fixed;top:calc(env(safe-area-inset-top) + 12px);left:50%;transform:translate(-50%,-90px);padding:11px 20px;border-radius:30px;font-size:13px;font-weight:700;z-index:50;transition:.5s var(--ease)}
-.toast.on{transform:translate(-50%,0)}
-</style>
-</head>
-<body>
-<div id="splash">
-  <img src="https://i.ibb.co/6RdmyKC0/logo.png" alt="">
-  <h1>TARGET BOARD</h1><p>By Ashraf CyberX</p>
-  <div class="ic"><span>📖</span><span>🎥</span><span>📝</span><span>📓</span><span>🏆</span></div>
-</div>
+<!DOCTYPE html><html lang="en" class="dark"><head>
+    <meta charset="utf-8">
+<!-- This site is hosted on Netlify. Anyone can build and deploy a site
+     like this one for free: https://netlify.new/?utm_campaign=loops&utm_source=ai-legible&utm_medium=owned&utm_content=comment&utm_id=f587c4e3-9923-4502-b69f-183fa93b55cb
+     Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ashraf CyberX - Target Board Free Study Portal</title>
+    <meta name="description" content="Free board exam batches, video lectures and chapter notes.">
+    
+    <!-- OpenGraph -->
+    <meta property="og:title" content="Ashraf CyberX - Target Board Free Study Portal">
+    <meta property="og:image" content="https://files.catbox.moe/4tbsk3.jpg">
+    <meta property="og:description" content="Free unlocked online batches, video lectures, and study notes.">
 
-<div id="app">
-  <header>
-    <button class="menu" onclick="drawer(1)" aria-label="Menu">☰</button>
-    <button class="pill glass" onclick="pickClass()"><img src="https://i.ibb.co/6RdmyKC0/logo.png" alt=""><span><b id="clsLbl">Select class</b><small>Ashraf CyberX ⌄</small></span></button>
-  </header>
-  <main id="main"></main>
-  <nav class="glass" id="nav"></nav>
-</div>
+    <!-- Google Fonts: Outfit + Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Outfit:wght@500;600;700;800;900&amp;family=Noto+Sans+Devanagari:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link rel="icon" type="image/jpeg" href="https://files.catbox.moe/4tbsk3.jpg">
+    <link rel="apple-touch-icon" href="https://files.catbox.moe/4tbsk3.jpg">
 
-<div class="ov" id="ov" onclick="drawer(0)"></div>
-<aside id="drawer">
-  <div class="top"><img class="av" src="https://i.ibb.co/6RdmyKC0/logo.png" alt=""><div><b class="h" style="font-size:18px">Ashraf CyberX</b><br><small style="color:var(--mut);font-size:10px;letter-spacing:1px">FREE STUDY PORTAL</small></div><button style="margin-left:auto;font-size:18px" onclick="drawer(0)">✕</button></div>
-  <small class="g">GENERAL</small>
-  <button class="row" onclick="go('my')">📘 My Courses <span>›</span></button>
-  <button class="row" onclick="go('all')">📝 Notes <span>›</span></button>
-  <button class="row" onclick="go('tests')">📋 Tests <span>›</span></button>
-  <button class="row" onclick="go('dev')">&lt;/&gt; Developer Info <span>›</span></button>
-  <button class="row" onclick="theme()">🌙 Dark mode <i class="sw"></i></button>
-  <small class="g">COMMUNITY</small>
-  <a class="row" style="text-decoration:none;color:inherit;border-radius:16px" href="https://t.me/hrbseb10thallcorse" target="_blank">🌐 Social Media Links <span>›</span></a>
-  <small class="g">MORE</small>
-  <button class="row" onclick="share()">❓ Help <span>›</span></button>
-  <button class="row" onclick="share()">🔗 Share <span>›</span></button>
-  <button class="row" onclick="go('dev')">ℹ️ About <span>›</span></button>
-</aside>
+    <script type="module" src="js/index-CovgJV4m.js"></script>
+    <link rel="stylesheet" crossorigin="" href="css/index-CNMyxpH_.css">
+  </head>
+  <body class="bg-[#0E0F13] text-gray-100 antialiased font-sans selection:bg-blue-500 selection:text-white">
+    <div id="root"></div>
+  
 
-<div class="ov" id="ov2" onclick="sheet(0)"></div>
-<div id="sheet"></div>
-<div class="toast glass" id="toast"></div>
-
-<script>
-const API='https://studyapkmod-targetboard.vercel.app/api';
-const $=s=>document.querySelector(s);
-const LS={get:(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-let courses=[],cls=LS.get('cls',''),my=LS.get('my',[]),page=(location.hash||'#home').slice(1);
-const cid=c=>c.id||c._id,ttl=c=>c.title||c.name||'Batch',img=c=>c.image||c.thumbnail||c.banner||c.img||c.poster||'https://i.ibb.co/6RdmyKC0/logo.png';
-const list=c=>cls?courses.filter(x=>new RegExp('(^|\\D)'+cls+'(\\D|$)').test(ttl(x))):courses;
-const TABS=[['home','⌂','Home'],['my','▶','My Course'],['all','▦','All Courses'],['tests','✓','Tests'],['dev','</>','Developer']];
-
-function haptic(){navigator.vibrate&&navigator.vibrate(8)}
-function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),2000)}
-function drawer(o){$('#drawer').classList.toggle('on',!!o);$('#ov').classList.toggle('on',!!o)}
-function sheet(o,h){const s=$('#sheet');if(h!==undefined)s.innerHTML=h;s.classList.toggle('on',!!o);$('#ov2').classList.toggle('on',!!o)}
-function theme(){const d=document.documentElement,l=d.dataset.theme!=='light';d.dataset.theme=l?'light':'dark';LS.set('theme',d.dataset.theme);document.querySelector('meta[name=theme-color]').content=l?'#fff9a6':'#0E0F13'}
-function go(p){haptic();drawer(0);page=p;location.hash=p;render()}
-function share(){const d={title:'Target Board',url:location.origin};navigator.share?navigator.share(d).catch(()=>{}):(navigator.clipboard&&navigator.clipboard.writeText(d.url),toast('Link copied'))}
-function pickClass(){sheet(1,`<div class="box" style="margin-top:6px"><div class="lg">🎓</div><h2 class="h">Choose Your Class</h2><p style="color:var(--mut);font-size:13px;margin-top:6px">Class select karein, phir batches dekhein.</p><select id="cs"><option value="">All Classes</option>${[9,10,11,12].map(n=>`<option value="${n}" ${cls==n?'selected':''}>Class ${n}</option>`).join('')}</select><button class="b" onclick="setCls($('#cs').value)">Show Batches</button></div>`)}
-function setCls(v){cls=v;LS.set('cls',v);$('#clsLbl').textContent=v?'Class - '+v:'Select class';sheet(0);render()}
-function enroll(id){if(!my.includes(id)){my.push(id);LS.set('my',my);toast('Enrolled ✓')}else toast('Already enrolled');haptic();nav()}
-function card(c,full){const id=cid(c),e=my.includes(id);return `<div class="card"><img loading="lazy" src="${img(c)}" alt=""><h3>${ttl(c)}</h3><div class="fr">FREE <em>100% free access</em></div><div class="btns"><button class="b" onclick="detail('${id}')">${full?'▶ Let\'s Study':'DETAILS'}</button><button class="b ${e?'ok':'d'}" onclick="enroll('${id}')">${e?'ENROLLED':'ENROLL'}</button></div></div>`}
-function nav(){$('#nav').innerHTML=TABS.map(([k,i,l])=>`<button class="${page===k?'a':''}" onclick="go('${k}')"><i>${i}</i><span>${l}</span>${k==='my'&&my.length?`<sup>${my.length}</sup>`:''}</button>`).join('')}
-
-function walk(n,d){if(d>4||!n)return'';let h='';const arr=Array.isArray(n)?n:Object.values(n).filter(Array.isArray).flat();
- arr.forEach(x=>{if(x&&typeof x==='object'){const t=x.title||x.name||x.chapter||x.subject;const u=x.url||x.link||x.video||x.pdf;if(t)h+=`<div class="sk" style="margin-left:${d*10}px">${u?`<a style="color:var(--ac);text-decoration:none" href="${u}" target="_blank">▶ ${t}</a>`:`<b>${t}</b>`}</div>`;h+=walk(x,d+1)}});return h}
-async function detail(id){sheet(1,'<p class="empty">Loading subjects and chapters...</p>');
- try{const r=await fetch(`${API}/course-content?id=${encodeURIComponent(id)}`),j=await r.json(),h=walk(j.data||j.content||j,0);sheet(1,`<h2 class="h" style="margin-bottom:10px">Course Content</h2>${h||'<p class="empty">Content abhi available nahi hai.</p>'}`)}
- catch(e){sheet(1,'<p class="empty">Content load nahi hua. Dobara try karein.</p>')}}
-
-function render(){nav();const m=$('#main'),L=list();let h='';
- if(page==='home'){const b=courses.slice(0,6);
-  h=`${b.length?`<div class="ban" id="ban">${b.map(c=>`<img src="${img(c)}" alt="">`).join('')}</div><div class="dots" id="dots">${b.map((_,i)=>`<i class="${i?'':'a'}"></i>`).join('')}</div>`:''}
-  <div class="q"><button onclick="go('all')"><span style="background:#2a2d36">📖</span>All Courses</button><button onclick="go('my')"><span style="background:#ef4444">📡</span>Live Class</button><button onclick="go('all')"><span style="background:#06b6d4">📝</span>Notes</button></div>
-  <h2 class="t">Latest Courses <button class="sm" onclick="go('all')">See all ›</button></h2>${L.slice(0,4).map(c=>card(c)).join('')||'<div class="empty">'+(courses.length?'Is class ke batches nahi mile.':'Loading...')+'</div>'}`}
- else if(page==='my'){const M=courses.filter(c=>my.includes(cid(c)));h=`<h2 class="t">My Courses</h2><p style="color:var(--mut);font-size:13px;margin-bottom:14px">Only the batches you enroll in show up here.</p>${M.map(c=>card(c,1)).join('')||'<div class="empty">Abhi koi batch enroll nahi hai.</div>'}`}
- else if(page==='all'){h=`<h2 class="t">All Courses <button class="sm" onclick="pickClass()">Select class</button></h2>${L.map(c=>card(c)).join('')||'<div class="empty">Koi batch nahi mila.</div>'}`}
- else if(page==='tests'){h=`<div class="box"><div class="lg">🎓</div><h2 class="h">Choose Your Class</h2><p style="color:var(--mut);font-size:13px;margin-top:6px">Class select karein, phir Subject aur Exam chunein.</p><select id="ts"><option value="">Select Class</option>${[9,10,11,12].map(n=>`<option value="${n}">Class ${n}</option>`).join('')}</select><button class="b" onclick="$('#ts').value?(setCls($('#ts').value),go('all')):toast('Pehle class chunein')">📚 Choose Subject & Exam</button></div>`}
- else{h=`<div class="dev" style="margin-top:16px"><span class="chip">✦ Architect & Creator</span><h1 style="font-size:32px;margin:12px 0 6px">Developer Info</h1><p>Get to know the developer, architect, and designer behind the Ashraf CyberX digital learning ecosystem.</p><div class="card" style="padding:26px 16px;margin-top:18px"><img src="https://i.ibb.co/6RdmyKC0/logo.png" alt=""><h2 class="h" style="margin-top:12px">Ashraf Ali</h2><p><b style="color:var(--ac)">Brand:</b> Ashraf CyberX</p><p>Developer & Designer · Champaran, Bihar, India</p></div><div class="btns"><a class="b" style="text-decoration:none" href="https://t.me/hrbseb10thallcorse" target="_blank">Telegram</a><a class="b d" style="text-decoration:none" href="https://whatsapp.com/channel/0029VbF7oDdLo4hdnj39Cw17" target="_blank">WhatsApp</a></div></div>`}
- m.innerHTML=`<section>${h}</section>`;m.scrollTop=0;
- const bn=$('#ban');if(bn){clearInterval(window._t);bn.onscroll=()=>{const i=Math.round(bn.scrollLeft/bn.clientWidth);document.querySelectorAll('#dots i').forEach((d,k)=>d.classList.toggle('a',k===i))};window._t=setInterval(()=>{const n=bn.children.length;if(!n||!document.body.contains(bn))return;bn.scrollTo({left:((Math.round(bn.scrollLeft/bn.clientWidth)+1)%n)*bn.clientWidth,behavior:'smooth'})},3200)}}
-
-async function boot(){
- document.documentElement.dataset.theme=LS.get('theme','dark');
- if(cls)$('#clsLbl').textContent='Class - '+cls;
- const t0=Date.now();
- try{const r=await fetch(API+'/courses'),j=await r.json();courses=Array.isArray(j)?j:(j.courses||j.data||[])}catch(e){}
- render();
- setTimeout(()=>{$('#splash').classList.add('out');$('#app').classList.add('on');setTimeout(()=>$('#splash').remove(),700)},Math.max(0,1800-(Date.now()-t0)));
-}
-addEventListener('hashchange',()=>{page=(location.hash||'#home').slice(1);render()});
-boot();
-</script>
-</body>
-</html>
+<script async="" src="js/hud.js" data-nf-variant="public" data-netlify-site-id="f587c4e3-9923-4502-b69f-183fa93b55cb" data-app-host="app.netlify.com"></script>
+</body></html>
